@@ -1,5 +1,8 @@
 from PyQt5.QtWidgets import *
-import ciphers
+from vigenere import encrypt_vigenere, decrypt_vigenere
+from des import encrypt_des, decrypt_des
+from rsa import encrypt_rsa, decrypt_rsa
+from md5 import encrypt_md5, decrypt_md5
 import sys
 
 class encryptionGUI(QDialog):
@@ -32,13 +35,13 @@ class encryptionGUI(QDialog):
             encryption_type = encryption_choices.currentText()
             if len(key) != 0 and len(message) != 0:
                 if encryption_type == "Vigenere Cipher":
-                    encrypted_message_body.setText(ciphers.encrypt_vigenere(message,key))
+                    encrypted_message_body.setText(encrypt_vigenere(message,key))
                 elif encryption_type == "DES":
-                    print("Implement DES encryption/decryption algo")
+                    encrypted_message_body.setText(encrypt_des(message, key))
                 elif encryption_type == "RSA":
-                    print("Implement RSA encryption/decryption algo")
+                    encrypted_message_body.setText(encrypt_rsa(message, key))
                 elif encryption_type == "md5-Checksum":
-                    print("Implement md5 Checksum encryption/decryption algo")
+                    encrypted_message_body.setText(encrypt_md5(message, key))
                 else:
                     print("do nothing")
 
@@ -48,13 +51,13 @@ class encryptionGUI(QDialog):
             encryption_type = encryption_choices.currentText()
             if len(key) != 0 and len(message) != 0:
                 if encryption_type == "Vigenere Cipher":
-                    decrypted_message_body.setText(ciphers.decrypt_vigenere(message,key))
+                    decrypted_message_body.setText(decrypt_vigenere(message,key))
                 elif encryption_type == "DES":
-                    print("Implement DES encryption/decryption algo")
+                    decrypted_message_body.setText(decrypt_des(message,key))
                 elif encryption_type == "RSA":
-                    print("Implement RSA encryption/decryption algo")
+                    decrypted_message_body.setText(decrypt_rsa(message,key))
                 elif encryption_type == "md5-Checksum":
-                    print("Implement md5 Checksum encryption/decryption algo")
+                    decrypted_message_body.setText(decrypt_md5(message,key))
                 else:
                     print("do nothing")
 
