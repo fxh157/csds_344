@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from vigenere import encrypt_vigenere, decrypt_vigenere
-from des import encrypt_des, decrypt_des
+from des import des_algorithm
 from rsa import encrypt_rsa, decrypt_rsa
 from md5 import encrypt_md5, decrypt_md5
 import sys
@@ -37,7 +37,7 @@ class encryptionGUI(QDialog):
                 if encryption_type == "Vigenere Cipher":
                     encrypted_message_body.setText(encrypt_vigenere(message,key))
                 elif encryption_type == "DES":
-                    encrypted_message_body.setText(encrypt_des(message, key))
+                    encrypted_message_body.setText(des_algorithm(message, key, encrypt=True))
                 elif encryption_type == "RSA":
                     encrypted_message_body.setText(encrypt_rsa(message, key))
                 elif encryption_type == "md5-Checksum":
@@ -53,7 +53,7 @@ class encryptionGUI(QDialog):
                 if encryption_type == "Vigenere Cipher":
                     decrypted_message_body.setText(decrypt_vigenere(message,key))
                 elif encryption_type == "DES":
-                    decrypted_message_body.setText(decrypt_des(message,key))
+                    decrypted_message_body.setText(des_algorithm(message, key, encrypt=False))
                 elif encryption_type == "RSA":
                     decrypted_message_body.setText(decrypt_rsa(message,key))
                 elif encryption_type == "md5-Checksum":
