@@ -64,6 +64,16 @@ class encryptionGUI(QDialog):
         def move_encryption_button_clicked():
             encrypted_message = encrypted_message_body.text()
             decrypt_input_space.setText(encrypted_message)
+        
+        def clear_button_clicked():
+            decrypt_input_space.setText("")
+            encrypt_input_space.setText("")
+            key_input_space.setText("")
+            decrypted_message_body.setText("")
+            encrypted_message_body.setText("")
+
+        clear_button = QPushButton('Clear')
+        clear_button.clicked.connect(clear_button_clicked)
 
         encrypt_button = QPushButton('Encrypt Shit')
         encrypt_button.clicked.connect(encrypt_button_clicked)
@@ -85,6 +95,7 @@ class encryptionGUI(QDialog):
         main_layout.addWidget(key_label,0,0)
         main_layout.addWidget(key_input_space,0,1,1,2)
         main_layout.addWidget(encryption_choices,0,4,1,2)
+        main_layout.addWidget(clear_button,0,6,1,1)
 
         main_layout.addWidget(encrypt_label,1,0)
         main_layout.addWidget(encrypt_input_space,1,1,1,2)
