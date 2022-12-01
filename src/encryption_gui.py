@@ -29,6 +29,14 @@ class encryptionGUI(QDialog):
         encryption_choices = QComboBox()
         encryption_choices.addItems(["Select cipher", "Vigenere Cipher", "DES", "RSA", "md5-Checksum"])
 
+        
+        def check_hex(s):
+            try:
+                n = int(s,16)
+                return True
+            except ValueError:
+                return False
+
         def encrypt_button_clicked():
             message = encrypt_input_space.text()
             key = key_input_space.text()
@@ -36,8 +44,11 @@ class encryptionGUI(QDialog):
             if len(key) != 0 and len(message) != 0:
                 if encryption_type == "Vigenere Cipher":
                     encrypted_message_body.setText(encrypt_vigenere(message,key))
-                elif encryption_type == "DES":
-                    encrypted_message_body.setText(des_algorithm(message, key, encrypt=True))
+                elif encryption_type == "DES": 
+                    if check_hex(key):
+                        encrypted_message_body.setText(des_algorithm(message, key, encrypt=True))
+                    else:
+                        key_input_space.setText("")
                 elif encryption_type == "RSA":
                     encrypted_message_body.setText(encrypt_rsa(message, key))
                 elif encryption_type == "md5-Checksum":
@@ -53,7 +64,10 @@ class encryptionGUI(QDialog):
                 if encryption_type == "Vigenere Cipher":
                     decrypted_message_body.setText(decrypt_vigenere(message,key))
                 elif encryption_type == "DES":
-                    decrypted_message_body.setText(des_algorithm(message, key, encrypt=False))
+                    if check_hex(key):
+                        decrypted_message_body.setText(des_algorithm(message, key, encrypt=False))
+                    else:
+                        key_input_space.setText("")
                 elif encryption_type == "RSA":
                     decrypted_message_body.setText(decrypt_rsa(message,key))
                 elif encryption_type == "md5-Checksum":
