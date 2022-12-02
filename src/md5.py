@@ -126,6 +126,3 @@ def encrypt_md5(plain_text, key):
 
     #run the md5 algorithm
     return(md5(input))
-
-    raise NotImplementedError()
-
