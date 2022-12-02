@@ -34,16 +34,18 @@ def multi_Inverse(Y, M):
             return X
     return -1
 
-p = sympy.randprime(1, 100)
-q = sympy.randprime(1, 100)
 
-public, private = generate_keypair(p, q)
+if __name__ == '__main__':
+    p = sympy.randprime(1, 100)
+    q = sympy.randprime(1, 100)
 
-message = input("Enter message you wish to encrypt: ")
+    public, private = generate_keypair(p, q)
 
-encrypt_message = encrypt_rsa(message, public)
-print(encrypt_message)
+    message = input("Enter message you wish to encrypt: ")
 
-decrypt_message = decrypt_rsa(encrypt_message, private)
+    encrypt_message = encrypt_rsa(message, public)
+    print(encrypt_message)
 
-print("Decrypted Message: " + decrypt_rsa(encrypt_message, private))
+    decrypt_message = decrypt_rsa(encrypt_message, private)
+
+    print("Decrypted Message: " + decrypt_rsa(encrypt_message, private))
