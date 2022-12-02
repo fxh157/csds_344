@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import *
+import sympy
 from vigenere import encrypt_vigenere, decrypt_vigenere
 from des import des_algorithm
-from rsa import encrypt_rsa, decrypt_rsa
+from rsa import encrypt_rsa, decrypt_rsa, generate_keypair
 from md5 import encrypt_md5, decrypt_md5
 import sys
 
@@ -11,6 +12,8 @@ class encryptionGUI(QDialog):
         self.assemble_gui()
 
     def assemble_gui(self):
+        private_rsa_key = 0
+
         self.setWindowTitle("Encryption Chicken")
         self.setFixedWidth(500)
 
@@ -41,7 +44,11 @@ class encryptionGUI(QDialog):
             message = encrypt_input_space.text()
             key = key_input_space.text()
             encryption_type = encryption_choices.currentText()
-            if len(key) != 0 and len(message) != 0:
+            if encryption_type == "RSA":
+                key_input_space.setText("")
+                key = ""
+                RSA = True
+            if len(key) != 0 and len(message) != 0 or RSA:
                 if encryption_type == "Vigenere Cipher":
                     encrypted_message_body.setText(encrypt_vigenere(message,key))
                 elif encryption_type == "DES": 
@@ -50,7 +57,11 @@ class encryptionGUI(QDialog):
                     else:
                         key_input_space.setText("")
                 elif encryption_type == "RSA":
-                    encrypted_message_body.setText(encrypt_rsa(message, key))
+                    public_key, private_key = generate_keypair(sympy.randprime(1, 200), sympy.randprime(1,200))
+                    private_rsa_key = private_key
+                    cipher = encrypt_rsa(message, public_key)
+                    string_cipher = "-".join([str(e) for e in cipher])
+                    encrypted_message_body.setText(string_cipher)
                 elif encryption_type == "md5-Checksum":
                     encrypted_message_body.setText(encrypt_md5(message, key))
                 else:
@@ -60,6 +71,8 @@ class encryptionGUI(QDialog):
             message = decrypt_input_space.text()
             key = key_input_space.text()
             encryption_type = encryption_choices.currentText()
+            if encryption_type == "RSA":
+                RSA = True
             if len(key) != 0 and len(message) != 0:
                 if encryption_type == "Vigenere Cipher":
                     decrypted_message_body.setText(decrypt_vigenere(message,key))
@@ -69,7 +82,7 @@ class encryptionGUI(QDialog):
                     else:
                         key_input_space.setText("")
                 elif encryption_type == "RSA":
-                    decrypted_message_body.setText(decrypt_rsa(message,key))
+                    decrypted_message_body.setText(decrypt_rsa([int(m) for m in message.split("-")], private_rsa_key))
                 elif encryption_type == "md5-Checksum":
                     decrypted_message_body.setText(decrypt_md5(message,key))
                 else:
