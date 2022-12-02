@@ -15,11 +15,11 @@ def create_keys(p, q):
     randgen = (p - 1) * (q - 1)
 
     rand = random.randrange(1, randgen)
-    gcd = math.gcd(rand, randgen)
+    greatest_com_denom = math.gcd(rand, randgen)
 
-    while gcd != 1:
+    while greatest_com_denom != 1:
         rand = random.randrange(1, randgen)
-        gcd = math.gcd(rand, randgen)
+        greatest_com_denom = math.gcd(rand, randgen)
 
     inverse = multi_Inverse(rand, randgen) 
     return ((rand, p * q), (inverse, p * q))

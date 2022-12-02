@@ -58,7 +58,7 @@ class encryptionGUI(QDialog):
                     else:
                         key_input_space.setText("")
                 elif encryption_type == "RSA":
-                    public_key, private_key = create_keys(sympy.randprime(1, 200), sympy.randprime(1,200))
+                    public_key, private_key = create_keys(sympy.randprime(100, 500), sympy.randprime(100,500))
                     self.private_rsa_key = private_key
                     cipher = encrypt_rsa(message, public_key)
                     string_cipher = "-".join([str(e) for e in cipher])
