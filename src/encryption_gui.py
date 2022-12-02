@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 import sympy
 from vigenere import encrypt_vigenere, decrypt_vigenere
 from des import des_algorithm
-from rsa import encrypt_rsa, decrypt_rsa, generate_keypair
+from rsa import encrypt_rsa, decrypt_rsa, create_keys
 from md5 import encrypt_md5, decrypt_md5
 import sys
 
@@ -57,7 +57,7 @@ class encryptionGUI(QDialog):
                     else:
                         key_input_space.setText("")
                 elif encryption_type == "RSA":
-                    public_key, private_key = generate_keypair(sympy.randprime(1, 200), sympy.randprime(1,200))
+                    public_key, private_key = create_keys(sympy.randprime(1, 200), sympy.randprime(1,200))
                     private_rsa_key = private_key
                     print(private_rsa_key)
                     cipher = encrypt_rsa(message, public_key)

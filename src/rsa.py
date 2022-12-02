@@ -1,19 +1,17 @@
 import math
 import random
-import sympy
 
 def encrypt_rsa(plain_text, key):
-    pkey, n = key
-    cipher = [(ord(char) ** pkey) % n for char in plain_text]
-    return cipher
+    cipherkey, n = key
+    encryptedBlock = [(ord(char) ** cipherkey) % n for char in plain_text]
+    return encryptedBlock
 
-def decrypt_rsa(cipher_text, key):
-    print(key)
-    pkey, n = key
-    cipher = [chr((char ** pkey) % n) for char in cipher_text]
-    return ''.join(cipher)
+def decrypt_rsa(encrypted_text, key):
+    cipherkey, n = key
+    decryptedBlock = [chr((char ** cipherkey) % n) for char in encrypted_text]
+    return ''.join(decryptedBlock)
 
-def generate_keypair(p, q):
+def create_keys(p, q):
     minLCM = p * q
     randgen = (p - 1) * (q - 1)
 
@@ -28,25 +26,9 @@ def generate_keypair(p, q):
 
     return ((rand, minLCM), (inverse, minLCM))
 
-def multi_Inverse(Y, M):
+def multi_Inverse(n, m):
  
-    for X in range(1, M):
-        if (((Y % M) * (X % M)) % M == 1):
-            return X
+    for x in range(1, m):
+        if (((n % m) * (n % m)) % m == 1):
+            return x
     return -1
-
-
-if __name__ == '__main__':
-    p = sympy.randprime(1, 100)
-    q = sympy.randprime(1, 100)
-
-    public, private = generate_keypair(p, q)
-
-    message = input("Enter message you wish to encrypt: ")
-
-    encrypt_message = encrypt_rsa(message, public)
-    print(encrypt_message)
-
-    decrypt_message = decrypt_rsa(encrypt_message, private)
-
-    print("Decrypted Message: " + decrypt_rsa(encrypt_message, private))
