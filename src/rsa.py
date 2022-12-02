@@ -8,7 +8,6 @@ def encrypt_rsa(plain_text, key):
     return cipher
 
 def decrypt_rsa(cipher_text, key):
-    print(key)
     pkey, n = key
     cipher = [chr((char ** pkey) % n) for char in cipher_text]
     return ''.join(cipher)
