@@ -59,6 +59,7 @@ class encryptionGUI(QDialog):
                 elif encryption_type == "RSA":
                     public_key, private_key = generate_keypair(sympy.randprime(1, 200), sympy.randprime(1,200))
                     private_rsa_key = private_key
+                    print(private_rsa_key)
                     cipher = encrypt_rsa(message, public_key)
                     string_cipher = "-".join([str(e) for e in cipher])
                     encrypted_message_body.setText(string_cipher)
@@ -73,7 +74,7 @@ class encryptionGUI(QDialog):
             encryption_type = encryption_choices.currentText()
             if encryption_type == "RSA":
                 RSA = True
-            if len(key) != 0 and len(message) != 0:
+            if len(key) != 0 and len(message) != 0 or RSA:
                 if encryption_type == "Vigenere Cipher":
                     decrypted_message_body.setText(decrypt_vigenere(message,key))
                 elif encryption_type == "DES":
@@ -82,7 +83,9 @@ class encryptionGUI(QDialog):
                     else:
                         key_input_space.setText("")
                 elif encryption_type == "RSA":
-                    decrypted_message_body.setText(decrypt_rsa([int(m) for m in message.split("-")], private_rsa_key))
+                    print(private_rsa_key)
+                    message = [int(m) for m in message.split("-")]
+                    decrypted_message_body.setText(decrypt_rsa(message, private_rsa_key))
                 elif encryption_type == "md5-Checksum":
                     decrypted_message_body.setText(decrypt_md5(message,key))
                 else:
