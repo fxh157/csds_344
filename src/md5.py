@@ -125,7 +125,7 @@ def encrypt_md5(plain_text, key):
     input = split2(raw_input)
 
     #run the md5 algorithm
-    print(md5(input))
+    return(md5(input))
 
     raise NotImplementedError()
 
