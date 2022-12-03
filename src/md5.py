@@ -115,6 +115,9 @@ def md5(input):
         hash += '{:08x}'.format(int.from_bytes(raw, byteorder='big'))
     return(hash)
 
+#To test try "message digest" and compare with online md5.
+
+
 
 def encrypt_md5(plain_text, key):
     #Process and convert to binary
