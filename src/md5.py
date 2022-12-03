@@ -55,7 +55,7 @@ def split2(input):
     while len(temp)%512 != 448:
         temp += '0'
     byte_arr = leng.to_bytes(8, byteorder='little')  # returns a byte array of 8 length that has the LSB at the front
-    len_str = (bin(int.from_bytes(byte_arr)).replace('b', '')[-64:]) #only returns the 64 lsb if the entry string is really long
+    len_str = (bin(int.from_bytes(byte_arr, byteorder="big")).replace('b', '')[-64:]) #only returns the 64 lsb if the entry string is really long
     temp += len_str
     output = [temp[i:i+512] for i in range(0, len(temp), 512)] #splits into size 512 chunks
     return output
@@ -87,7 +87,7 @@ def md5(input):
         #splits input into 16 32-bit blocks called "words" each byte individually is bigendian where the words are little endian (msb is last)
         for i in temp:
             raw = int(i,2).to_bytes(4, byteorder="little") #md5 word sections are little endian with bytes per word
-            m.append(int.from_bytes(raw))
+            m.append(int.from_bytes(raw, byteorder="big"))
         #loop through the m values for each itteration
         init = input_arr[:]
         cnt = 1

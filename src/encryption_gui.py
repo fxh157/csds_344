@@ -84,12 +84,11 @@ class encryptionGUI(QDialog):
                 elif encryption_type == "RSA":
                     message = [int(m) for m in message.split("-")]
                     decrypted_message_body.setText(decrypt_rsa(message, self.private_rsa_key))
-                elif encryption_type == "md5-Checksum":
-                    decrypted_message_body.setText(md5(message,key))
 
         def move_encryption_button_clicked():
-            encrypted_message = encrypted_message_body.text()
-            decrypt_input_space.setText(encrypted_message)
+            if encryption_choices.currentText() != "md5-Checksum":
+                encrypted_message = encrypted_message_body.text()
+                decrypt_input_space.setText(encrypted_message)
         
         def clear_button_clicked():
             decrypt_input_space.setText("")
@@ -101,9 +100,9 @@ class encryptionGUI(QDialog):
         clear_button = QPushButton('Clear')
         clear_button.clicked.connect(clear_button_clicked)
 
-        encrypt_button = QPushButton('Encrypt Shit')
+        encrypt_button = QPushButton('Encrypt')
         encrypt_button.clicked.connect(encrypt_button_clicked)
-        decrypt_button = QPushButton('Decrypt Shit')
+        decrypt_button = QPushButton('Decrypt')
         decrypt_button.clicked.connect(decrypt_button_clicked)
         move_encryption_button = QPushButton('Move Encryption')
         move_encryption_button.clicked.connect(move_encryption_button_clicked)
