@@ -55,16 +55,16 @@ def split2(input):
     while len(temp)%512 != 448:
         temp += '0'
     byte_arr = leng.to_bytes(8, byteorder='little')  # returns a byte array of 8 length that has the LSB at the front
-    len_str = (bin(int.from_bytes(byte_arr)).replace('b', '')[-64:])
+    len_str = (bin(int.from_bytes(byte_arr)).replace('b', '')[-64:]) #only returns the 64 lsb if the entry string is really long
     temp += len_str
-    output = [temp[i:i+512] for i in range(0, len(temp), 512)]
+    output = [temp[i:i+512] for i in range(0, len(temp), 512)] #splits into size 512 chunks
     return output
 
 
 
 #medthod described in ietf specifications
 def bit_shift(x, amount):
-    return ((x << amount) | (x>>(32-amount))) & 0xFFFFFFFF #left bit shift by amount then add the bits shifted to the back end
+    return ((x << amount) | (x>>(32-amount))) & 0xFFFFFFFF #left bit shift by amount then add the bits shifted to the back end. can't be larger than 32bits
 
 
 def function(num, b , c, d):
@@ -99,15 +99,15 @@ def md5(input):
                 f = function(count+1, init[1], init[2], init[3])
                 step_0 = (f + init[0])&0xFFFFFFFF#modular addition of init[0] and result of function
                 step_1 = (step_0 + m[m_i]) & 0xFFFFFFFF
-                step_2 = (step_1 + ki)&0xFFFFFFFF # Modular addition...
-                step_3 = bit_shift(step_2, bit_rotations[cnt-1])
+                step_2 = (step_1 + ki)&0xFFFFFFFF # Modular addition of k[i] and prev step
+                step_3 = bit_shift(step_2, bit_rotations[cnt-1]) #bit shift predetermined amountr
                 step_4 = (step_3 + init[1])&0xFFFFFFFF
-                replace.extend([init[3],step_4,init[1],init[2]])
+                replace.extend([init[3],step_4,init[1],init[2]]) #replace A=D, B = Step_4, C=B, D=C
                 init = replace
                 cnt +=1
         rep = []
         for num in range(len(init)):
-            rep.append((init[num]+input_arr[num])&0xFFFFFFFF)
+            rep.append((init[num]+input_arr[num])&0xFFFFFFFF)#Final modular addition with initial inputs 
         input_arr = rep
     hash = ""
     for entry in input_arr:
