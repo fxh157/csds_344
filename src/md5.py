@@ -66,7 +66,7 @@ def split2(input):
 def bit_shift(x, amount):
     return ((x << amount) | (x>>(32-amount))) & 0xFFFFFFFF #left bit shift by amount then add the bits shifted to the back end. can't be larger than 32bits
 
-
+#4 main functions for md5
 def function(num, b , c, d):
     if num == 1:
         return (b & c) | (~b & d)
@@ -111,7 +111,7 @@ def md5(input):
         input_arr = rep
     hash = ""
     for entry in input_arr:
-        raw = entry.to_bytes(4, byteorder="little")
+        raw = entry.to_bytes(4, byteorder="little")#Need to flip the words so that we return A,B,C,D from lsb to msb for each
         hash += '{:08x}'.format(int.from_bytes(raw, byteorder='big'))
     return(hash)
 
