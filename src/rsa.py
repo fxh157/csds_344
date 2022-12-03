@@ -1,28 +1,26 @@
 import math
-import random
 
 def encrypt_rsa(plain_text, key):
-    ciphtext, n = key
-    cipher = [(ord(char) ** ciphtext) % n for char in plain_text]
-    return cipher
+    ciphtext, x = key
+    encryptedCiph = [(ord(char) ** ciphtext) % x for char in plain_text]
+    return encryptedCiph
 
 def decrypt_rsa(cipher_text, key):
-    ciphtext, n = key
-    cipher = [chr((char ** ciphtext) % n) for char in cipher_text]
-    return ''.join(cipher)
+    ciphtext, x = key
+    decryptedCiph = [chr((char ** ciphtext) % x) for char in cipher_text]
+    return ''.join(decryptedCiph)
 
-def create_keys(p, q):
-    randgen = (p - 1) * (q - 1)
+#I use 65357 here because it's an extremely commonly used and reliable large prime number for RSA algorithms
+def create_keys(x, y):
+    randgen = (x - 1) * (y - 1)
 
-    rand = random.randrange(1, randgen)
-    greatest_com_denom = math.gcd(rand, randgen)
+    greatest_com_denom = math.gcd(65357, randgen)
 
     while greatest_com_denom != 1:
-        rand = random.randrange(1, randgen)
-        greatest_com_denom = math.gcd(rand, randgen)
+        greatest_com_denom = math.gcd(65357, randgen)
 
-    inverse = multi_Inverse(rand, randgen) 
-    return ((rand, p * q), (inverse, p * q))
+    inverse = multi_Inverse(65357, randgen) 
+    return ((65357, x * y), (inverse, x * y))
 
 def multi_Inverse(n, m):
  
