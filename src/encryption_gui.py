@@ -50,7 +50,7 @@ class encryptionGUI(QDialog):
                 key = ""
                 RSA = True
             if len(key) != 0 and len(message) != 0 or RSA:
-                if encryption_type == "Vigenere Cipher":
+                if encryption_type == "Vigenere Cipher" and key.isalpha():
                     encrypted_message_body.setText(encrypt_vigenere(message,key))
                 elif encryption_type == "DES": 
                     if check_hex(key):
@@ -65,8 +65,6 @@ class encryptionGUI(QDialog):
                     encrypted_message_body.setText(string_cipher)
                 elif encryption_type == "md5-Checksum":
                     encrypted_message_body.setText(encrypt_md5(message, key))
-                else:
-                    print("do nothing")
 
         def decrypt_button_clicked():
             RSA = False
@@ -76,7 +74,7 @@ class encryptionGUI(QDialog):
             if encryption_type == "RSA" or encryption_type == "md5-Checksum":
                 RSA = True
             if len(key) != 0 and len(message) != 0 or RSA:
-                if encryption_type == "Vigenere Cipher":
+                if encryption_type == "Vigenere Cipher" and key.isalpha():
                     decrypted_message_body.setText(decrypt_vigenere(message,key))
                 elif encryption_type == "DES":
                     if check_hex(key):
@@ -88,8 +86,6 @@ class encryptionGUI(QDialog):
                     decrypted_message_body.setText(decrypt_rsa(message, self.private_rsa_key))
                 elif encryption_type == "md5-Checksum":
                     decrypted_message_body.setText(md5(message,key))
-                else:
-                    print("do nothing")
 
         def move_encryption_button_clicked():
             encrypted_message = encrypted_message_body.text()
