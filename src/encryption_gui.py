@@ -50,7 +50,7 @@ class encryptionGUI(QDialog):
                 key = ""
                 RSA = True
             if len(key) != 0 and len(message) != 0 or RSA:
-                if encryption_type == "Vigenere Cipher" and key.isalpha():
+                if encryption_type == "Vigenere Cipher":
                     encrypted_message_body.setText(encrypt_vigenere(message,key))
                 elif encryption_type == "DES": 
                     if check_hex(key):
@@ -74,7 +74,7 @@ class encryptionGUI(QDialog):
             if encryption_type == "RSA" or encryption_type == "md5-Checksum":
                 RSA = True
             if len(key) != 0 and len(message) != 0 or RSA:
-                if encryption_type == "Vigenere Cipher" and key.isalpha():
+                if encryption_type == "Vigenere Cipher":
                     decrypted_message_body.setText(decrypt_vigenere(message,key))
                 elif encryption_type == "DES":
                     if check_hex(key):
